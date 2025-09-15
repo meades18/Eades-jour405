@@ -9,7 +9,7 @@ In this assignment, we will be working with a dataset reporting the number of cr
 You will need to load the tidyverse library
 
 ```{r}
-
+library(tidyverse)
 ```
 
 Then you'll load the data from the web. The URL for the data is: https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/pg_crime_totals_2024.csv. You will create a dataframe called `pg_crime` that contains the data from this URL.
@@ -17,12 +17,13 @@ Then you'll load the data from the web. The URL for the data is: https://raw.git
 ### Task 2: Load the Data and Describe It
 
 ```{r}
+pg_crime <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/pg_crime_totals_2024.csv")  
 ```
 ### Task 3: Describe the Data
 
 You should examine that dataframe carefully by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the categories of incidents. From a reporting standpoint, are any of the categories more important than others? Why or why not? Do any of them make the job of summarizing the data more difficult? Why or why not?
 
-ANSWER HERE
+Of all of the categories, the two that seem to be important would be auto stolen compared auto stolen and recovered. Throughout the year, the reports in the auto stolen category steadily increased with very high numbers, near 350; however, the auto stolen and recovered category has very low numbers. This contrast in recovered stolen vehicles versus reported stolen vehicles raises the question about why so many vehicles go unrecovered. Furthermore, the data could be hard to summarize from an overall rise/fall in crime for the county since the numbers for the reported accidents categories reach the hundreds versus the violent crime reports in the single digits. Additionally, there are several subcategories of crimes, such as breaking and entering. From a reporting standpoint, analyzing the data to understand the total crime for the county may become difficult for readers to understand with the varying categories. 
 
 ### Task 4: Calculating Averages
 
@@ -30,13 +31,19 @@ Calculate the total number of incidents per month for each category using `mutat
 
 ```{r}
 
+
+pg_crime_averages <- pg_crime |>
+  mutate(total_incidents   = rowSums(across(2:13), na.rm = TRUE),
+    average_incidents = rowMeans(across(2:13), na.rm = TRUE))
+
+
 ```
 
 ### Task 5: Describe the Averages
 
 Examine the new dataframe, `pg_crime_averages`, by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the average number of incidents per month for each category. Which categories have the highest average number of incidents per month? Which have the lowest? What does this tell you about the pattern of crime in Prince George's County? Are there categories that you have questions about? Why or why not?
 
-ANSWER HERE
+Among the highest average number of incidents per month are the categories "accident" and "auto stolen," and among the lowest average number of incidents per month are the categories "robbery residential" and "homicide." The abnormally high number of auto stolen incidents can be explained by the social media trend that encouraged young adults to break into Kia and Hyundai vehicles during 2023. This high number of auto stolen incidents reflects that the county may be lacking in protection for residents' vehicles following this trend. Additionally, one question I have is in regards to the average number of accidents for 2024. The category "accidents" could refer to car vehicle accidents or at-home accidents. Without the context of what the category "accidents" specifically mean, it would not be a good idea to use this for analysis for crime trends in the county. On the other hand, the categories that have the lowest averages during the year are categorized as "violent crimes" in the legal system, which could suggest the county takes proactive measures to foster a safer community environment and effective policing against these types of crimes.  
 
 
 ### Task 6: Testing a Theory
@@ -44,19 +51,34 @@ ANSWER HERE
 One theory about crime is that it is more likely to occur in the summer months. Test this theory by creating three new columns using `mutate()` that calculate the percentage change compared to the average for each category of crime for the months of June, July, and August. Call the new columns `june_change`, `july_change`, and `august_change`. Assign the result to a new dataframe called `summer_crime_averages`.
 
 ```{r}
+summer_crime_averages <- pg_crime_averages %>%
+  mutate(
+    june_change   = ((7   - average_incidents) / average_incidents) * 100,
+    july_change   = ((8   - average_incidents) / average_incidents) * 100,
+    august_change = ((9 - average_incidents) / average_incidents) * 100
+  )
+
 ```
 
 ### Task 7: Describe the Summer Crime Averages
 
 Look at the `summer_crime_averages` dataframe by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the percentage change in the average number of incidents per month for each category of crime for the months of June, July, and August. Do you see any patterns? What does this tell you about the theory that crime is more likely to occur in the summer months?
 
-ANSWER HERE
+For the month of June, the categories with the highest average incidents actually show the steepest decline in percentage change. For example, there are almost 400 average "auto stolen" incidents; however, during June, the percentage change about 99%, reflecting an almost complete decrease in the "auto stolen" category during this time period. On the contrary, in June, the crime categories that showed the lowest number of average incidents show an increase in crime rates, with residential robberies increasing by 150%. 
+
+July shows a similar trend as June with its highest average incidents showing a steeper decrease in crime rates during the month. One interesting pattern that is introduced during July is the increased percent change for the crimes that have the lowest average numbers for the entire year. Although the average for robbery residential during 2024 in the county is 2.8, the percentage change during July reaches 185%. 
+
+Similar to June and July, the top averages of incidents for 2024 show a 96%-98% decrease in August. For 2024, the average number of incidents reported in the robbery residential category was 2.8, but August shows a drastic increase of 221%. 
+
+Overall, the data reflects that the higher averaged incident categories calculated for the entire year show the highest decrease during the summer. Of the top categories that show a steep decline in reported incidents involve vehicles. The steep decrease during the summer of crimes involving vehicles could suggest less vehicles are on the streets during these months due to warmer weather for on-foot commuting and students at nearby universities being home for the summer. Contrastingly, the "homicides" and "robbery residential" categories showed increased rates during the summer despite having the lowest averages for the year. Although this trend cannot be simply explained, the increased percentages in these crimes could suggest lower police supervision during the summer due to students who live in these neighborhoods being gone, allowing for higher atypical crimes to take place. 
 
 ### Task 8: What's the Story?
 
 Write up a lede and nutgraf of a story focused on the crime data in Prince George's County. It could be from any of the dataframes you've created in this assignment. The lede should be a single sentence that summarizes the most important information in the data. The nutgraf should be a paragraph that provides more context and explains why the data is important.
 
-ANSWER HERE
+Despite the high average of vehicles reported stolen in Prince George's County, the number of cars stolen and recovered are notably low. 
+
+In the most recent crime data for the county, about 400 vehicles were reported stolen, while 40 of those cars were reported as stolen and recovered. In a time where vehicle break-ins are steadily on the rise, the stark gap in recovery of these vehicles raises questions for the community on how to keep their vehicles safe. 
 
 ### Task 9: Save Your Work and Put it on GitHub
 
