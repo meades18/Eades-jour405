@@ -51,7 +51,7 @@ Among the highest average number of incidents per month are the categories "acci
 One theory about crime is that it is more likely to occur in the summer months. Test this theory by creating three new columns using `mutate()` that calculate the percentage change compared to the average for each category of crime for the months of June, July, and August. Call the new columns `june_change`, `july_change`, and `august_change`. Assign the result to a new dataframe called `summer_crime_averages`.
 
 ```{r}
-summer_crime_averages <- pg_crime_averages %>%
+summer_crime_averages <- pg_crime_averages |>
   mutate(
     june_change   = ((7   - average_incidents) / average_incidents) * 100,
     july_change   = ((8   - average_incidents) / average_incidents) * 100,
