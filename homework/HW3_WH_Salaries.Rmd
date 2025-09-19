@@ -1,4 +1,4 @@
----
+f---
 title: "HW3 WH Salaries"
 ---
 
@@ -8,7 +8,8 @@ In this assignment, we will be working with a dataset containing information abo
 
 You will need to load the tidyverse library
 
-```{r}
+```{r} 
+library(tidyverse)
 ```
 
 Then you'll load the data from the web. The URL for the data is: https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/biden_wh_salaries_2024.csv. You will create a dataframe called `wh_salaries` that contains the data from this URL.
@@ -16,19 +17,23 @@ Then you'll load the data from the web. The URL for the data is: https://raw.git
 ### Task 2: Load the Data and Describe It
 
 ```{r}
+wh_salaries <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/biden_wh_salaries_2024.csv")
 ```
 ### Task 3: Describe the Data
 
 You should examine that dataframe carefully by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the categories of incidents. From a reporting standpoint, what stands out to you about this data? Are there any salary values that will cause problems for analysis?
 
-ANSWER HERE
+One of the first things that I notice about this data set is that there are several salaries at zero. Additionally, based on the data it seems that the base salary pay for a White House employee is 56500 and then continues to increase to 70500, and so on. However, based on the reported salaries, I am curious about how the salaries are determined. It seems there are several similar job positions with different reported salaries. For example, the job "policy advisor," has multiple reported salaries of 0, but further down in the dataset there are policy advisors listed with a salary of 70500. This problem is found throughout the entire data set; therefore, it will be difficult to understand how salaries are determined through analysis. 
 
 ### Task 4: Calculate the Mean and Median of the Salaries
 
 Write code to calculate the mean and median of the salaries in the dataset using the `summarize()` function. You don't need to make a new dataframe, just display the results.
 
 ```{r}
-
+wh_salaries |>
+summarize(mean_salary = mean(salary),
+          median_salary = median(salary)
+)
 ```
 
 ### Task 5: Add in the minimum and maximum salaries
@@ -36,17 +41,22 @@ Write code to calculate the mean and median of the salaries in the dataset using
 Take the code you just wrote and add in the minimum and maximum salaries (the functions for that are `min()` and `max()`). Your results should show four columns: mean_salary, median_salary, min_salary, max_salary.
 
 ```{r}
-
+wh_salaries |>
+summarize(mean_salary = mean(salary),
+          median_salary = median(salary),
+          max_salary = max(salary),
+          min_salary = min(salary)
+)
 ```
 
 ### Task 6: Describe the Results
 
 Write a couple of sentences describing the results of your analysis. What do the mean and median salaries tell you about the data? What do the minimum and maximum salaries tell you? Are there any outliers in the data?
 
-ANSWER HERE
+In the data, there is one clear outlier in the data that influences the mean and median calculations, at 251,258. This is the only White House job position with this reported value, even though there are several of the same position listed throughout the data set with lower values. The maximum salary tells us that the staffer may do more required work, or has been with the White House longer than the other staffers in the Associate Council job position. The minimum value in the data tells us that there are positions within the White House that are most likely entry/volunteer positions. Since the maximum value is the only value this large and there are multiple positions listed at zero, the mean is skewed. Therefore, the mean is not an accurate representation of the typical salary of a White House employee. Lastly, the median is at 110500, which is slightly higher than the average White House salary, reflecting staffers receive more than the average in salaries. 
 
 ### Task 7: Story Idea
 
 Based on the data, what is your best story idea? What is the next step you would take to develop that story idea?
 
-ANSWER HERE
+Based on the data, the first story that comes to mind is figuring out the pay gap between similarly listed job positions. It seems there are several jobs that are the exact same listing with different salaries, and the maximum value is included in this category. To understand the pay gap, while also understand the drastic differences between a quarter million salary and a zero earned salary, I would look into the job positions themselves. First, I would need to understand the system for how the White House determines salary, and I need to confirm whether seniority affects salary pay. Secondly, for the jobs that have a value of zero, I would look into what the job requires and whether if it is volunteer work or an internship. Additionally, I will need to research what the job position for the salary at 251258 is, how long the person who fills this role has worked with the White House for and the previous positions, if any, held by the staffer. Essentially, my story will focus on the wide pay gap between the White House salary outliers ( 0 and 251258), while also investigating why there are pay differences between employees with similar job titles. 
