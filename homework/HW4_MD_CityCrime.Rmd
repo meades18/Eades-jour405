@@ -58,7 +58,9 @@ md_cities_change <- md_cities_rate |>
 
 Look at the `md_cities_change` dataframe by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the percentage change results. What's more interesting here, the patterns or the outliers? What's the story in the data?
 
-ANSWER HERE
+The percent change results in the data follow a somewhat similar pattern compared to the rates provided in the previous task. As I mentioned, the data showed that cities with smaller populations have comparable rates of violent and property crime to cities with larger populations. For the same city, Accident, both property and violent crime increased by around 86%, with a population of around 325. On the other hand, cities with higher populations, such as Baltimore and Frederick, showed decreases in both categories of crime. 
+
+Although this slight pattern is interesting, the outliers of the data are the more interesting part of the crime data. There are more than 10 cities with populations of under 20,000 with violent crime percentage changes over 150%. The outliers in the data are important to note because it can explain why there are percentage changes with drastically large numbers; even if a small city has a handful of cases from one year to the next, it will cause a massive percentage change. The percentage changes for smaller cities will signal a larger wave of crime in the cities. However, it is only because the cities have a smaller population; therefore, the data will show a higher spike following a small increase in crime. 
 
 ### Task 8: Tell the Best Story
 
