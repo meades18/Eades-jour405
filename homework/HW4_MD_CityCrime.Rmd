@@ -66,8 +66,9 @@ Although this slight pattern is interesting, the outliers of the data are the mo
 
 Write up a lede and nutgraf of a story with the _best_ story idea you've found in this assignment. The lede should be a single sentence that summarizes the most important information in the data. The nutgraf should be a paragraph that provides more context and explains why the data is important.
 
-ANSWER HERE
+For decades, Baltimore city has been categorized as one of the most crime-stricken and violent cities in the nation. But recently released Maryland crime data tells a different story. 
 
+From 2019 to 2020, Baltimore City saw a decrease in both violent and property crime, while smaller cities, like Cottage City and Edmonston, have reported sharp increases for both categories.  
 ### Task 9: Save Your Work and Put it on GitHub
 
 Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
