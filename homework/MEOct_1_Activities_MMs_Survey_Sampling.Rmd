@@ -1,0 +1,118 @@
+---
+title: "Oct 1 Activities: M&Ms; Survey; Sampling"
+date: 9-30-2025 
+Madi Eades
+---
+
+All three class activities are on this .rmd notebook
+
+Activity #1: Activity: M&Ms - Central Limit Theorem
+
+Working in groups, each group will get a handful of candy from the bag, and then count the number of red and black candies. Log those in this Google Sheet 
+
+https://docs.google.com/spreadsheets/d/1KOeoVTq2W7L2T9sWjwh5U_2f59GsTeAylVGD53rNWww/edit?usp=sharing
+
+Based on 'Outta the Park (Kaya, Miguel, Riley, Noah)' 
+
+Take a look at the values that we all get - what do you notice about the patterns? This is an exercise about the central limit theorem. 
+
+The central limit theorem states that the sampling distribution of the mean of any independent, random variable will be normal or nearly normal, if the sample size is large enough.
+
+Then discuss and try to answer these questions:
+--How close is your group's mean to the true proportion of 0.5?
+--Why do different groups get different results? 
+--How does this relate to polls and surveys in real life?
+Write your answer below. And then you may eat the M&Ms.
+
+**A:**
+The average percentage change for colored M&Ms in sample is 91.25%. Our group's colored M&Ms mean is 41.2% higher than the the true proportion of 0.5, reflecting that our average was not super close. Since the samples were taken at random, every group result will have different findings in regards to the average percentages of colored M&Ms and brown and red M&Ms. For example, our group counted 114 colored candies, and the group 'Rainbows' counted only 86. With this in mind, it can be assumed that the average percentage changes of the colored candies will vary depending on the amount of colored candies within the sample. 
+
+Both polls and surveys rely on representative samples of populations for the most accurate results. In the same way that the average percent change for the group's sample was not close to the sample's true proportion, reflecting an unrepresentative sample of colored M&Ms in an average bag. Using this activity as an example, it can be inferred that polls and surveys oftentimes will have to account for poor sampling sizes that result in an unrepresentative study. 
+------------------------------------------------------------------------------
+
+# Activity #2:
+
+Belonging Survey
+
+Working in pairs, take a look back at the main findings from UMD's Belonging Survey:
+
+https://president.umd.edu/internal/belonging
+
+
+Specifically, focus on the "Sample Description" section and the Appendix. Discuss the differences and between the population and the sample, and what the document says about how the survey attempted to deal with them. Are there any decisions described in the document that raise questions in your minds? Detail the differences you see and your understanding of the methods they employed (it's ok if you don't understand all of them), and add your questions. You should discuss this as a pair but submit individually.
+
+**A:**
+The Belonging Survey aims to reflect the UMD population, which includes faculty, staff and students. The UMD population is 53485 people; however, the study only received 12,233 responses. The sample is highly unrepresentative of the UMD community, representing roughly 22% of the population. Additionally, over one-third of the responses were from UMD staff members and 20% were undergraduate students. To address these differences, the survey shows figures depicting the representativeness of the respondents to the UMD population. Figure 1 represents how representative the sample is regarding gender identity, in which the survey is highly representative of the female population, but is pretty low for the male population. The survey also does not include any gender expansive individuals, which represent 3% of our population. In figure 2, the graph depicts the representativeness of the sample in regards to race and ethnic identity. Compared to the the UMD white population, which is reported at 40%, the sample represents 39%; the Black/African American sample was reported as 11%, and 13% for the UMD population as a whole. 
+
+The biggest question I have is about the "Other" category in figure 2, which represents 7% of the population, while the sample respondents represent 12%. Should the researchers expand the categories of race and ethnic identity to better represent the UMD population in the survey? I feel that this would be crucial to understanding the results to the survey as most of the questions are in regards to individuals' exeriences on campus, which can vary greatly depending on identity.  
+------------------------------------------------------------------------------
+
+# TASK 3: SAMPLING
+
+Based on the class sampling demo (available on Elms), sample data from a population using R and the Tidyverse. You should get started by loading the tidyverse in a new R block.
+
+### Task 1: Load the tidyverse
+
+**A**
+```{r}
+
+library(tidyverse)
+```
+
+
+### Task 2: Load 1,000 rows of data with the ages of people from 18-80
+
+**A**
+```{r}
+set.seed(42)
+population <- tibble(
+  age = sample(18:80, 1000, replace = TRUE)
+)
+head(population)
+
+```
+
+### Task 3: Sample 100 rows of data from the dataset
+**A**
+```{r}
+sample_100 <-population |> 
+  sample_n(100)
+
+sample_50 <-population |> 
+  sample_n(50)
+
+```
+
+
+### Task 4: Calculate the mean age and standard deviation of the sample
+**A**
+```{r}
+sample_100 |> summarize(mean = mean(age), sd = sd(age)) 
+
+sample_50 |> summarize(mean = mean(age), sd = sd(age))
+
+```
+
+
+### Task 5: Calculate the mean age and standard deviation of the population
+**A**
+```{r}
+population |> summarize(mean = mean(age), sd = sd(age))
+
+```
+
+
+### Task 6: Compare the sample and population statistics
+**A**
+```{r}
+
+
+```
+
+Compare the means and standard deviations. Are they similar? Go back and re-run the sampling and statistics calculations with a smaller sample size. How do the results change?
+
+**A**: The mean for the sample is 48.77 and the mean for the population is 49.87. Since there is roughly a 1.1 difference between the mean of the sample and the mean of the population, it can be inferred that the sample's average age is highly representative of the population's average age. Additionally, the standard deviation of the sample is 18.26, and the standard deviation for the population is 17.5. In general, the sample of 100 is highly representative of the population, but slightly varies.
+
+However, when I sample a smaller population size the numbers for both sample sizes change. When sampling 50 of the 1000, the mean reflects that the sample slightly farther from the population, with a mean of 48.58 compared to 49.87. For the standard deviation of the sample of 50, it shows that the data is slightly less spread out compared to the population of 1000. 
+
+When finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.

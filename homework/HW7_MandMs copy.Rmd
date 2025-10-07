@@ -1,0 +1,80 @@
+---
+title: "HW7_MandMs"
+date: 10/1/2025
+Madi Eades 
+---
+
+
+In this assignment, you'll be picking up where you left off with the M&Ms activity. You'll load the data and perform some basic statistical analysis. Follow the steps below to complete the assignment.
+
+### Task 1: Load the tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+
+### Task 2: Load an M&Ms dataset from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/mandms.csv
+```{r}
+MM_data <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/mandms.csv")
+```
+
+
+### Task 3: Sample 5 rows of data from the dataset, and then sample 10 rows, saving each to separate dataframes called sample5 and sample10. Be sure to use set.seed(1234) before you start.
+```{r}
+set.seed(1234)
+sample_10 <-MM_data |> 
+  sample_n(10)
+
+sample_5 <-MM_data |> 
+  sample_n(5)
+```
+
+
+### Task 4: Calculate the mean, median and standard deviation of red M&Ms from each of the samples.
+```{r}
+sample_10 |> summarize(mean = mean(red), sd = sd(red), median = median(red)) 
+
+sample_5 |> summarize(mean = mean(red), sd = sd(red), median = median(red))             
+```
+
+
+### Task 5: Calculate the mean, median and standard deviation of red M&Ms from the population
+
+```{r}
+MM_data |> summarize(mean = mean(red), median = median(red), sd = sd(red))
+```
+
+### Task 6: Make three histograms: one each for sample5, sample10 and the original dataset. Include a headline. Use a consistent binwidth.
+
+```{r}
+sample_10 |>  
+  ggplot() + 
+  geom_histogram(aes(x = red), binwidth = 5) 
+
+sample_5 |> 
+  ggplot() + 
+  geom_histogram(aes(x = red), binwidth = 5) 
+
+MM_data |> 
+  ggplot() +
+  geom_histogram(aes(x = red), binwidth = 5)
+```
+
+
+### Task 7: Answer questions
+
+
+Compare the three sets of means, standard deviations and histograms. Which are more helpful to you in understanding the accuracy of the samples? 
+When comparing the three sets of statistics from the data sets, the mean seems to be the most helpful for me in understanding the accuracy of the samples in comparison to the population. To me, the mean can show how accurate the samples' data is because it shows the average number of data tells you the typical value. Since the averages of the samples (74.3 and 74.6) are somewhat close to the average value of the population, which shows the samples are a pretty good reflection of the population. 
+
+What does this exercise tell you about the relationship between sample size and estimate accuracy? 
+This exercise shows that the mean, median and standard deviation are a good way to show how reflective samples can be in comparison to the population that is being studied. For example, the sample of 10 shows a closer accuracy to the population since it is larger. The mean of the sample of 10 is 74.3, while the mean of the population is 72.98, which is nearly 73; therefore, the larger sample reflects a more accurate representation of the population. Additionally, you can see from the  as the sample size increases from 5 to 10, the standard deviation increases from 11.58879 to 12.11106, These values reflect that the data from the sample of 10 is closer to the standard deviation of the population and more representative, while the sample of 5 has a smaller standard deviation showing the data is closely centered around the mean and not as reflective of the population.
+
+How does random sampling introduce variation into statistical estimates?
+Random sampling introduces variation into statistical estimates because each time you take a sample from the population you are studying, you are guaranteeing different groups being studied each time providing slightly various results. As a result of random sampling, you will have smaller samples that reflect different values or parts of the population. 
+
+If you repeated this process, would the samples always be identical? Why or why not? If this process was repeated, I do not think that the samples would always be identical. In this activity, we randomly sampled 5 and 10 values of the population, which showed values pulled from the population that slightly vary from each other. Due to random sampling, if the process were to be repeated, the values extracted from the population should vary from the first data sets extracted to show another set of the population studied. 
+
+
+When finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
