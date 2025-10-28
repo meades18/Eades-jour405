@@ -1,0 +1,116 @@
+---
+title: "HW6_Spotify_Songs"
+date: 09-30-2025
+---
+
+In this assignment, you will be working with a dataset of songs played on Spotify in 2020, and you'll be writing code to explore the range of danceability scores in the data, using standard deviation and histograms. You'll also write up your findings.
+
+### Task 1: Load the tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+### Task 2: Load the Spotify Songs dataset from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/spotify_2020.csv
+
+```{r}
+spotify <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/spotify_2020.csv")
+```
+
+### Task 3: Calculate the mean and standard deviation of the danceability scores
+
+Write code to calculate the mean standard deviation of the danceability scores in the Spotify dataset. Display those.
+
+```{r}
+spotify |> 
+  summarize(sd_danceability = sd(danceability), 
+            mean_danceability = mean(danceability))
+```
+
+### Task 4: Create a histogram of the danceability scores
+
+Write code to create a histogram of the danceability scores in the Spotify dataset, based on the example we did in class.
+
+**A**: Note if they forgot a headline.
+comment: "Remember to add a headline next time."
+
+```{r}
+spotify |> 
+  ggplot(aes(x = danceability)) +
+  geom_histogram(binwidth = 0.01, fill = "blue", color = "black") +
+  labs(title = "Distribution of Danceability Scores in Spotify Songs 2020", x = "Danceability Score", y = "Number of Songs")
+```
+
+
+
+
+
+### Task 5: Add a line to the histogram for the mean danceability score
+
+```{r}
+spotify |> 
+  ggplot(aes(x = danceability)) +
+  geom_histogram(binwidth = 0.01, fill = "blue", color = "black") +
+  geom_vline(aes(xintercept = mean(danceability, na.rm = TRUE)), color = "red", linetype = "dashed", size = 1)  +
+  labs(title = "Distribution of Danceability Scores in Spotify Songs 2020", x = "Danceability Score", y = "Number of Songs")
+```
+
+
+### Task 5: Add two lines to the histogram to show one standard deviation
+
+Take the previous code and add two lines to the histogram for the 1st standard deviation below and above the mean score.
+
+
+Write code to add a vertical line to the histogram for the mean danceability score, based on the example in class.
+
+```{r}
+spotify |> 
+  ggplot(aes(x = danceability)) +
+  geom_histogram(binwidth = 0.05, fill = "blue", color = "black") +
+  geom_vline(aes(xintercept = mean(danceability)), color = "red", linetype = "dashed") +
+  geom_vline(aes(xintercept = mean(danceability) + sd(danceability)), color = "yellow", linetype = "dashed") +
+  geom_vline(aes(xintercept = mean(danceability) - sd(danceability)), color = "yellow", linetype = "dashed") +
+  labs(title = "Distribution of Danceability Scores in Spotify Songs 2020", x = "Danceability Score", y = "Number of Songs")
+```
+
+**A**:  Note if they forgot a headline.
+comment: "Remember to add a headline next time."
+Full points if they put the SD lines.
+
+### Task 7: Describe our results
+
+
+Write a few sentences about the distribution of danceability scores in the Spotify dataset. Is it a normal distribution, or is it skewed in one direction? What does the mean and distribution tell us about the songs in the dataset?
+
+**A**: Note if they say the data skews to the right and use this explanation below:
+
+
+The distribution appears to be slightly left-skewed (the median is higher than the mean), with most songs clustering toward higher danceability scores between 0.5 and 0.85. 
+
+To verify the data skews to the left (from the tutorial last Thursday):
+If the mean is below the median, data generally skews to the left.
+If the mean is above the median, data generally skews to the right.
+We can also calculate skewness. A negative skewness means a left skew.
+With our data: it is left skewed: -0.3699678. Mean, 0.6730774, is below the median, 0.693	 
+
+The mean danceability score is 0.69, which suggests that the average song in the dataset is pretty danceable, and the distribution is mostly centered around that value, but there is a tail of songs with lower danceability scores, but not a lot of them. It's pretty normal, so the mean has some meaning here.
+
+```{r}
+spotify |> 
+  summarize(sd = sd(danceability), 
+            mean = mean(danceability),
+            median = median(danceability)) |> 
+   mutate(skew = 3*(mean-median)/sd)
+
+#data is left skewed: -0.3699678. Mean, 0.6730774, is below the median, 0.693	  
+```
+
+Background: https://www.investopedia.com/terms/s/skewness.asp#:~:text=A%20normal%20distribution%20exhibits%20zero,and%20second%20coefficients%20of%20skewness.
+
+
+### Task 7: Save Your Work and Put it on GitHub
+
+Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
+
+
+
