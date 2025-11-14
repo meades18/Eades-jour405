@@ -1,0 +1,113 @@
+---
+title: "final_project"
+output: html_document
+date: "2025-11-12"
+author: MADI EADES
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Part 1
+
+```{r cars}
+library(tidyverse)
+```
+
+```{r}
+billboard <- read_csv("billboardhot.csv")
+```
+The data, Billboard Hot 100 Database, that I chose is every song to ever top the Billboard Hot 100 charts from April 1, 1958 to January 11, 2025, compiled by Chris Dalla Riva. Skimming over the dataset, there are several categories, including artist, title, genre, ratings, danceability, etc. Dalla Riva compiled the data as he was writing the book Uncharted Territory: What Numbers tell us about the Biggest Hit Songs and Ourselves https://bio.site/uncharted_territory, which is a data-driven history of hit songs since 1958. The database also includes a data dictionary, which details all of the categories and their definitions. Lastly, the database includes the lyric topics that occurred througout the databases songs. 
+
+For my analysis, the most important columns will be danceability, overall rating, the genre of each song and weeks at number one. For my analysis, I am curious about how danceability may impact the overall rating of a hit song. Additionally, I am not sure what could possibly be missing that I would need to do this analysis as this database is very detailed.
+
+```{r}
+billboard |> select(Song, `Overall Rating`, Danceability) |> 
+  arrange(desc(`Overall Rating`))
+
+```
+##danceability
+```{r}
+danceability_stats <- billboard |>
+  summarise(
+    mean_danceability   = mean(Danceability, na.rm = TRUE),
+    max_danceability    = max(Danceability, na.rm = TRUE),
+    min_danceability    = min(Danceability, na.rm = TRUE),
+    median_danceability = median(Danceability, na.rm = TRUE),
+    sd_danceability = sd(Danceability, na.rm = TRUE)
+  )
+```
+
+##Overall Rating: 
+```{r}
+rating_stats <- billboard |>
+  summarise(
+    mean_rating   = mean(`Overall Rating`, na.rm = TRUE),
+    max_rating    = max(`Overall Rating`, na.rm = TRUE),
+    min_rating   = min(`Overall Rating`, na.rm = TRUE),
+    median_rating = median(`Overall Rating`, na.rm = TRUE),
+    sd_rating = sd(`Overall Rating`, na.rm = TRUE)
+  )
+```
+
+##Correlation 
+```{r}
+billboard |>
+  summarise(
+    correlation = cor(`Overall Rating`, Danceability,
+                      method = "pearson",
+                      use = "complete.obs")
+  )
+```
+The correlation coefficent between Overall Rating and Danceability is 0.024, which is between 0 and 0.3, meaning there is a relationship between the two variables; however, the relationship is weak. If the two variables were to be plotted on a graph, the correlation line would show a slightly upward trend. The correlation coefficient tells us that as one variable goes up, the other slightly increases. 
+
+##scatterplot
+```{r}
+billboard |> 
+  ggplot() +
+  geom_point(aes(x=Danceability, y=`Overall Rating`)) +
+  geom_smooth(aes(x=Danceability, y=`Overall Rating`), method="lm") +
+  expand_limits(x = 0, y = 0)
+```
+
+
+## Hypotheses 
+Null Hypothesis: Danceability does not influence the overall rating of a song.
+Alternative Hypothesis: Danceability does influence the overall rating of a song.
+
+Alternative options to analyze: 
+
+Null hypothesis: The beats per minute and energy scores of a song does not influence weeks the song lasted at number one.   
+Alternative hypothesis: The beats per minute and energy of a song does influence weeks the song lasted at number one.
+
+#Engery Stats
+```{r}
+energy_stats <- billboard |> 
+summarise(mean_energy = mean(Energy, na.rm = TRUE),
+  median_energy = median(Energy, na.rm = TRUE), 
+  max_energy = max(Energy, na.rm = TRUE),
+  min_energy = min(Energy, na.rm = TRUE), 
+  sd_energy = sd(Energy, na.rm = TRUE)
+)
+```
+
+#BPM Stats
+```{r}
+bpm_stats <- billboard |> 
+  summarise(mean_bpm = mean(BPM, na.rm = TRUE),
+    median_bpm = median(BPM, na.rm = TRUE),
+    max_bpm = max(BPM, na.rm = TRUE),
+    min_bpm = min(BPM, na.rm = TRUE), 
+    sd_bpm = sd(BPM, na.rm = TRUE)
+    )
+```
+
+##Questions I have: 
+
+I understand that I need to group the songs by danceability (e.g., high vs. low) and then perform a t-test, but I’m unsure of the best way to implement this in R. What would be the best way to group the danceability scores? 
+To test the hypotheses, would it be best to run a t-test on the mean overall rating compared to these two groups? 
+
+
+
+
