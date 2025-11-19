@@ -39,7 +39,7 @@ schools |>
 
 The scatterplot shows the overall trend of the relationship between the FARMS percentage and the math test scores. The red line represents the linear regression line, which helps us understand the average relationship between the two variables. Based on what you see here, what's the relationship between FARMS percentage and math test scores?
 
-**WRITE YOUR ANSWER HERE**
+There is a weak positive correlation between the percentage of schools where students receive FARM and their students' math test scores. 
 
 
 ### Task: Linear Regression Model (3 points)
@@ -58,7 +58,7 @@ In the middle, you can see the (Intercept) is 59.57897 and the FARMS coefficient
 
 Based on what you've learned so far, is this model worth using? What does it tell us about the nature of the relationship between FARMS percentage and math scores?
 
-**WRITE ANSWER HERE**
+According to the p-value, which is 0.1225, the relationship between FARMS percentage and math scores is weak, since it is below 0.05. Further, the R-squared value is 59.57897, which is close to 100, which can signify some significance of the relationship. 
 
 ### Task: Identifying Schools with Biggest Residuals (2 points)
 
@@ -83,10 +83,10 @@ schools <- schools |>
 ```
 The schools with the biggest positive residuals are performing better than expected, while the schools with the biggest negative residuals are performing worse than expected, based on their FARMS percentage. Look at the absolute values of the residuals; what are the largest differences between the predicted result and the actual math scores?
 
-**WRITE YOUR ANSWER HERE**
+The largest differences between the predicted result and the actual math scores based on the residuals absolute value is 45.83. The largest differences vary by +/- 30. 
 
 ## Task: Evaluate the model (3 points)
 
 A school board member has said at a meeting that elementary schools with fewer students on free and reduced price meals do better on standardized math tests. Describe what conclusions you'd draw from this model's results and how it would influence a story pitch about the school board member and math scores.
 
-**WRITE YOUR ANSWER HERE**
+According to the p-value, there is no significant evidence between the FARMS score and the students' math scores, so looking at this value the board member's claim is not correct. However, the R-squared value is nearly 60%, which is close to 100, and shows that the FARMS percentages may have some significant effect on the math test scores. 
