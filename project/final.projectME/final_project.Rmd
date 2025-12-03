@@ -180,7 +180,7 @@ The box plot confirms what the t-test results showed. Black artists have an aver
 
 ##Statistical test #2: Linear Regression for Black Artists 
 
-For my second statistical test, I chose to do a linear regression model to see whether an artist's race (Black v White) can predict danceability scores for a song. I chose to do this test because my hypothesis looks directly at whether an artist's race can predict a more danceable song. 
+For my second statistical test, I chose to do a linear regression model to see whether an artist's race (Black and White) can predict danceability scores for a song. I chose to do this test because my hypothesis looks directly at whether an artist's race can predict a more danceable song. 
 
 Null Hypothesis: A song by a Black artist does not predict a higher danceability score
 Alternative hypthesis: A song by a Black Artist will predict a higher danceability score
@@ -191,7 +191,7 @@ summary(model)
 ```
 ##Results
 
-First, the R-squared value is 0.07262, or 7.26%, which is a very low percentage. This percentage suggests that the variation in danceability scores is about 7% explained by the artist's race, showing that race does play a factor in predicting danceability, but only a very small portion of the songs. Second, the p-value is p < 0.001 at 2.2e-16, or 0.00000000000000022, which suggests the results of the model are extremely significant. The regression result on whether a Black artist will predict a higher danceability score is highly statistically significant, which can further prove my alternative hypothesis that A song created by a black artist will predict a higher danceability score.  
+First, the R-squared value is 0.07262, or 7.26%, which is a very low percentage. This percentage suggests that the variation in danceability scores is about 7% explained by the artist's race, showing that race does play a factor in predicting danceability, but only a very small portion of the songs. Second, the p-value is p < 0.001 at 2.2e-16, or 0.00000000000000022, which suggests the results of the model are extremely significant. The  result on whether a Black artist will predict a higher danceability score is highly statistically significant, which can further prove my alternative hypothesis that a song created by a black artist will predict a higher danceability score.  
 
 
 ##Linear Regression model for white artists 
