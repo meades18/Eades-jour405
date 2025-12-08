@@ -1,7 +1,7 @@
 ---
 title: "Multiple Regression Analysis: Maryland Voter Turnout"
-name: "YOUR NAME HERE"
-date: 8-24-2025
+name: Madi Eades
+date: 12-07-2025
 ---
 
 # Introduction
@@ -27,7 +27,9 @@ head(md_turnout)
 
 Before building our model, let's explore the data to understand the variables and their relationships. Examine the correlation matrix to see how the independent variables relate to each other and to the dependent variable (voter turnout). Which variables seem to be correlated? Are there any that are not correlated at all? Also look at the multiple scatterplots. Which variables seem to have a linear relationship with the dependent variable? Which do not?
 
-ANSWER HERE
+First, the correlation matrix shows that there is a negative correlation between percentage of unemployment and voter turnout, showing a dark red circle, within the -0.6 to -0.8 region. Additionally, the variables that also seem to have a correlation with voter turnout are the percentage of white voters, which has a lighter blue circle suggesting a positive correlation between 0.6 to 0.8. After the percentage of white voters, the following correlated variables with voter turnout are income and median age, within the 0.4 to 0.6 region. 
+
+The variables that seem to have a relationship with voter turnout is voter income, the percentage of white and median age. All of these predictors have positive relationships in predicting voter turnout. On the other hand, the predictor that suggests a negative correlation to voter turnout is the percentage of unemployed voters, which suggests as the percentage of unemployment increases the percentage of voter turnout decreases. 
 
 
 ```{r}
@@ -90,7 +92,11 @@ The coefficients tell us the estimated effect of each independent variable on th
 
 Examine the output of the model, checking the coefficients, residuals, and overall model fit. How well does this multiple variable model predict turnout? Do any of the variables seem to be insignificant? Is this a useful model, based on what you've seen? Why?
 
-ANSWER HERE
+Looking at the residuals, the minimum value is -0.054193 and the maximum value is 0.024262, which are small and suggest that the model can accurately predict the voter turnout against the multiple variables. The median is 0.000494, showing that the data is closely clustered around the zero. 
+
+The variables that seem to be insignificant in predicting voter turnout are education level, unemployment and population, which all have p values that are higher than 0.05. For example, the p-value for education level is 0.83677. 
+
+I think this model can be useful when analyzing the accuracy of initial claims about the relationships between multiple factors that could possibly predict a dependent variable. Knowing the residuals, especially the minimum and maximum values, allows us to examine how accurate the predictions in the model are. Additionally, the p-value of the model is 2.999e-06, which is much lower than 0.05, which suggests the model as a whole is statistically significant. In the data, I originally claimed that there was a negative high correlation between unemployment and voter turnout, which showed a larger circle and linear relationship. Once the model was run, the model suggested the percentage of unemployment was not significant in predicting voter turnout. 
 
 ```{r}
 # Build initial model with all predictors
@@ -104,19 +110,24 @@ summary(initial_model)
 
 Create three alternative models by adding or removing variables to see if we can improve the model's performance. Turnout will always be the dependent variable, but you should alter the independent variables by removing or adding some. Then compare the models using adjusted R-squared values. Are any of the models significantly better than the others?
 
-ANSWER HERE
+For model 2, I chose percentage of a bachelors degree or higher, aka education level, as the first predictor. This model shows a very small adjusted r-squared value compared to the other models at 0.05044749. This suggests that 5% of the variance in voter turnout is predicted by education level, meaning that education level is not a strong predictor of voter turnout, as expected. 
+
+For model 3, I chose to do income as the predicting variable. The adjusted r-squared value for income level is 0.1656268, which suggests that nearly 17% of the variance in voter turnout can be predicated solely by income level. This model ranked in between model 2 and model 4 on the model comparison graph.  
+
+For model 4, I chose race as the sole predictor of voter turnout in the comparison. The adjusted r-swaured value for racial composition is 0.4569641, or about 46%. This is highly significant compared to the other models in the comparison, reflecting a much higher value than 5 and 17 percent. This suggests that racial composition is a strong indicator in predicting voter turnout. 
+
 
 ```{r}
 # Model 2
-model2 <- lm(turnout ~ REPLACE ME, data = md_turnout)
+model2 <- lm(turnout ~ pct_bachelors_higher, data = md_turnout)
 summary(model2)
 
 # Model 3
-model3 <- lm(turnout ~ REPLACE ME, data = md_turnout)
+model3 <- lm(turnout ~ income, data = md_turnout)
 summary(model3)
 
 # Model 4
-model4 <- lm(turnout ~ REPLACE ME, data = md_turnout)
+model4 <- lm(turnout ~ pct_white, data = md_turnout)
 summary(model4)
 
 # Compare models
@@ -145,4 +156,8 @@ ggplot(model_comparison, aes(x = reorder(Model, Adjusted_R_squared), y = Adjuste
 
 Without using the words "multiple regression model", describe how you could use this analysis to cover an election or voter participation story.
 
-ANSWER HERE
+Recent data analyzing the 2024 election suggests that racial composition may play the most significant role in predicting voter turnout. 
+
+When analyzing the relationship between voter turnout and voter demographics, including education level and income, the data suggests that race is the strongest predictor of turnout. 
+
+When the results of the data are formed in a manner that simplifies the results, it can guide reporting to look at the gaps in voter turnout, which can be suggested by the racial composition as the highest predictor of turnout. 
