@@ -89,6 +89,50 @@ Alternative options to analyze:
 Null hypothesis: The beats per minute and energy scores of a song does not influence weeks the song lasted at number one.   
 Alternative hypothesis: The beats per minute and energy of a song does influence weeks the song lasted at number one.
 
+##updated hypothesis
+Null Hypothesis: A song by a Black artist does not predict a higher danceability score compared to that of a white artist.
+Alternative hypthesis: A song by a Black Artist will predict a higher danceability score compared to a song by a white artist.
+
+##Scatterplot of Danceability x songs created by Black artists 
+```{r}
+billboard |> 
+  ggplot() +
+  geom_point(aes(x=danceability, y=`artist_black`)) +
+  geom_smooth(aes(x=danceability, y=`artist_black`), method="lm") +
+  expand_limits(x = 0, y = 0)
+```
+##Correlation between an artist's being black and danceability scores
+```{r}
+billboard |>
+  summarise(
+    correlation = cor(`artist_black`, danceability,
+                      method = "pearson",
+                      use = "complete.obs")
+  )
+```
+
+This correlation value suggests that there is a moderate positive relationship between danceability scores of a song and the artist being black. However, the relationship is not super strong since it is below 0.9 and closer to zero.  
+
+##Correlation between an artist's being white and danceability scores
+```{r}
+billboard |>
+  summarise(
+    correlation = cor(`artist_white`, danceability,
+                      method = "pearson",
+                      use = "complete.obs")
+  )
+```
+##Scatterplot of Danceability x songs created by Black artists 
+```{r}
+billboard |> 
+  ggplot() +
+  geom_point(aes(x=danceability, y=`artist_white`)) +
+  geom_smooth(aes(x=danceability, y=`artist_white`), method="lm") +
+  expand_limits(x = 0, y = 0)
+```
+Looking at the scatterplot first, there is an obvious negative relationship between an artist being white and the danceability of a song. This fits with the correlation value of -0.1204431, which indicates a weak negative relationship. In all, there is a very weak but negative relationship between an artist being white and their song's danceability score. 
+
+
 #Engery Stats
 ```{r}
 energy_stats <- billboard |> 
@@ -139,7 +183,7 @@ t_test_danceability <- t.test(danceability ~ artist_race, data = billboard)
 ```
 ##T-test results and analysis: 
 
-First, from the results of assigning a value of one to each artist, we can see that there are far less black artists (358) than that of white artists (638) in the dataset. To test the if there is a statistically significant difference in danceability scores between songs from white artists and songs from black artists, I used a two sample t-test. The t-test resulted in a p-value of 1.265e-14, or 0.00000000000001265, which is less than the standard p-value cutoff, 0.05. The result of the p-value suggests that there is a statistically significant difference in danceability means between black artists and white artists. Since the p-value is below 0.05, I reject the null hypothesis that there is no real difference in the average danceability score between black artists and white artists, and I accept the alternative hypothesis. 
+First, from the results of assigning a value of one to each artist, we can see that there are far less black artists (358) than that of white artists (638) in the dataset. To test the if there is a statistically significant difference in danceability scores between songs from white artists and songs from black artists, I used a two sample t-test. The t-test resulted in a p-value of 1.265056e-14, or 0.00000000000001265, which is less than the standard p-value cutoff, 0.05. The result of the p-value suggests that there is a statistically significant difference in danceability means between black artists and white artists. Since the p-value is below 0.05, I reject the null hypothesis that there is no real difference in the average danceability score between black artists and white artists, and I accept the alternative hypothesis. 
 
 Additionally, to test whether black artists have more danceable songs than that of white artists I directly compare the mean danceability scores of these two groups from the t-test. The mean danceability score for black artists was much higher, 66.96, than that of white artists, 59.12. These scores signify that black artists, on average, have a more danceable song compared to white artists. 
 
@@ -208,3 +252,28 @@ Alternative hypothesis: A song by a white artist will predict a low danceability
 First, the r-squared value is lower than that of the linear model for black artists at 0.01367, or 1.37%. This percentage suggest that only about 1.37% of the variation in danceability scores can be predicted by an artist's race being white. On the other hand, the p-value for the model is 3.484e-05, or 0.00003484, which is far below the thresholds to be statistically significant. This result indicates that if the artist is white it can predict a danceability score.
 
 For both linear regression models, the r-squared values are very low and not close to 100, which indicates that an artist's race cannot be the sole predictor of a song's danceability score. The two-way t-test p-values and the p-values from the linear regression model show that an artist's race is a statistically significant indicator of danceability scores. Tracks featuring Black artists had a higher average than songs featuring white artists; however, it is key to note that an artist's race only predicts a small portion of the danceability score but can still mean it is statistically significant. Therefore, I can reject my null hypotheses and accept my alternative hypotheses. 
+
+
+##Final Project: Last Part 
+
+##My Findings 
+
+From my analysis of the Billboard Hot 100 songs, I found that songs featuring Black artists have a higher average danceability score compared to those of white artists. For Black artists, the adjusted r-squared value is 0.07262, or 7.26%, which is a very low percentage. This indicates that only a very small percentage of the variance in danceability scores can be explained by the dependent variable, which was an artist being Black. For white artists, the adjusted r-squared value was 0.01367, or 1.37%, which is lower than the adjusted r-squared value for Black artists, which indicates that an even smaller percentage of the variance in danceability scores.
+However, across a two-way t-test analyzing the danceability scores against an artist's race there was a p-value of 1.27e-14. This value suggests that the relationship between these variables is statistically significant. 
+
+Additionally, to test whether black artists have more danceable songs than that of white artists I directly compare the mean danceability scores of these two groups from the t-test. The mean danceability score for black artists was much higher, 66.96, than that of white artists, 59.12. These scores signify that black artists, on average, have a more danceable song compared to white artists. 
+
+Overall, my results found that an artist's race is a meaningful predictor for how danceable a song can be. Although, it is essential to note that the results of the linear regression model and the corresponding adjusted r-squared values indicates that an artist's race cannot be the sole predictor of danceability in a song. 
+
+##My Pitch 
+
+According to a report published by the National Library of Medicine, danceability is typically measured by tempo, beat strength and the overall regularity in the acoustic signal. These factors are considered neutral elements to quantify danceability of songs; however, the results of my statistical analysis indicates that an artist's race plays a statistically significant role in predicting danceability scores. 
+
+Danceability is often an algorithmic element of a song that boosts audience engagement and influences chart performance, the results of an artist's race being statistically significant in predicting a danceability score could reveal biases in how music could be categorized. Historically, music created by Black artists falls into the genres of Go-Go, Hip Hop, R&B and house, which are types that score high on energy and tempo measures. Since danceability is supposed to be measured by neutral aspects, such as tempo and rhythm, the statistical relationship between race and danceability suggests that algorithms may be learning from historical genre patterns rather than evaluating sound in a fully neutral way. 
+
+My story would focus on how neutral categorical measurements are when other factors like race are proven statistically significant in predicting danceability scores. In other words, I would explore whether streaming platforms are reinforcing long-standing racial associations with rhythm and movement under the appearance of neutral algorithms. 
+
+The potential problems with this story would be that the adjusted r-squared values suggest that an artist being either white or black only explains a very small portion of the variance in danceability. Therefore, it would be difficult to explain to a reader that does not understand statistical analysis that just because it explains a small portion does not mean it is irrelevant. Also, the data only considers race by two categories, limiting the analysis and not considering mixed race or any other races. 
+
+My plan to report on this would be to interview at least one judge from the Billboard Hot 100 to explain how the panel measures danceability. This would hopefully give insights on the specific algorithm used to rank songs. I also would look to interview sources that are experts in the music industry and song charting to understand how other factors like genre could have an impact on danceability of a song and what the patterns look like historically.  
+
